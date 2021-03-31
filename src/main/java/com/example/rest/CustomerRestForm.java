@@ -1,15 +1,12 @@
 package com.example.rest;
 
-import org.omg.PortableServer.ServantActivatorOperations;
-
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@Path("customer")
-public class CustomerRest {
+@Path("customerform")
+public class CustomerRestForm {
 
     /**
      * Class for holding the list of customers and handling the requests
@@ -46,27 +43,30 @@ public class CustomerRest {
     }
 
     /**
-     * @param customer
+     *
+     * @param name
+     * @param age
      */
     @POST
-    @Consumes("application/xml")
-    public void createCustomer(Customer customer) {
+    public void createCustomer(@FormParam("name") String name, @FormParam("age") int age) {
         traceMethod(Thread.currentThread());
-        Customer newCustomer = new Customer(customer);
+        Customer newCustomer = new Customer(name, age);
         customers.add(newCustomer);
     }
 
     /**
+     *
      * @param id
-     * @param customer
+     * @param name
+     * @param age
      */
     @PUT
     @Path("{id}")
     @Consumes("application/xml")
-    public void modifyCustomer(@PathParam("id") int id, Customer customer) {
+    public void modifyCustomer(@PathParam("id") int id, @FormParam("name") String name, @FormParam("age") int age) {
         traceMethod(Thread.currentThread());
         deleteCustomer(id);
-        customers.add(new Customer(customer));
+        customers.add(new Customer(name, age));
     }
 
     /**

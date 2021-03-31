@@ -1,15 +1,15 @@
 package com.example.rest;
 
-import org.omg.PortableServer.ServantActivatorOperations;
+import org.apache.http.HttpResponse;
+import sun.security.provider.certpath.OCSPResponse;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-@Path("customer")
-public class CustomerRest {
+@Path("customerjson")
+public class CustomerRestJson {
 
     /**
      * Class for holding the list of customers and handling the requests
@@ -23,7 +23,7 @@ public class CustomerRest {
      * @return A concatenation of the toString method for all customers
      */
     @GET
-    @Produces("application/xml")
+    @Produces("application/json")
     public ArrayList<Customer> getCustomer() {
         traceMethod(Thread.currentThread());
         return customers;
@@ -36,7 +36,7 @@ public class CustomerRest {
      * @return toString method of customer
      */
     @GET
-    @Produces("application/xml")
+    @Produces("application/json")
     @Path("{id}")
     public Customer getCustomerList(@PathParam("id") int id) {
         traceMethod(Thread.currentThread());
@@ -49,7 +49,7 @@ public class CustomerRest {
      * @param customer
      */
     @POST
-    @Consumes("application/xml")
+    @Consumes("application/json")
     public void createCustomer(Customer customer) {
         traceMethod(Thread.currentThread());
         Customer newCustomer = new Customer(customer);
@@ -62,7 +62,7 @@ public class CustomerRest {
      */
     @PUT
     @Path("{id}")
-    @Consumes("application/xml")
+    @Consumes("application/json")
     public void modifyCustomer(@PathParam("id") int id, Customer customer) {
         traceMethod(Thread.currentThread());
         deleteCustomer(id);
